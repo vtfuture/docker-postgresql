@@ -1,5 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20170123
-MAINTAINER sameer@damagehead.com
+FROM ubuntu:latest
 
 ENV PG_APP_HOME="/etc/docker-postgresql"\
     PG_VERSION=9.6 \
@@ -12,6 +11,9 @@ ENV PG_APP_HOME="/etc/docker-postgresql"\
 ENV PG_BINDIR=/usr/lib/postgresql/${PG_VERSION}/bin \
     PG_DATADIR=${PG_HOME}/${PG_VERSION}/main
 
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y vim.tiny wget sudo net-tools ca-certificates unzip apt-transport-https
+ 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
  && echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
  && apt-get update \
